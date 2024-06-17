@@ -1,16 +1,11 @@
-from typing import Optional
-
 from pydantic import BaseModel
 from pydantic import ConfigDict
+
 from .enemy import EnemyRead
 
 
 class UserBase(BaseModel):
     username: str
-
-
-class UserCreate(UserBase):
-    pass
 
 
 class UserUpdate(UserBase):

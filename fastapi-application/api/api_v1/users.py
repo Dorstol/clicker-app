@@ -1,28 +1,26 @@
 from typing import Annotated
 
-from fastapi import (
-    APIRouter,
-    Depends,
-)
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.models import db_helper
 from core.schemas.user import (
     UserRead,
-    UserCreate,
 )
 from crud import users as users_crud
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(tags=["Users"])
 
 
-@router.get("", response_model=list[UserRead])
-async def get_users(
-    # session: AsyncSession = Depends(db_helper.session_getter),
+@router.get("", response_model=UserRead)
+async def get_user(
+    user_id: int,
     session: Annotated[
         AsyncSession,
         Depends(db_helper.session_getter),
     ],
 ):
-    users = await users_crud.get_all_users(session=session)
-    return users
+    user = await users_crud.get_user(
+        user_id=user_id,
+        session=session,
+    )
+    return user

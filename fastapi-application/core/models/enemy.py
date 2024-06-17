@@ -1,4 +1,3 @@
-from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
@@ -9,13 +8,22 @@ from .mixins.int_id_pk import IntIdPkMixin
 class Enemy(IntIdPkMixin, Base):
     __tablename__ = "enemies"
 
-    name: Mapped[str] = mapped_column(unique=True)
+    name: Mapped[str] = mapped_column(
+        unique=True,
+    )
     # image
     # icon
     level: Mapped[int]
     max_hp: Mapped[int]
     current_hp: Mapped[int]
     gold_reward: Mapped[int]
-    is_dead: Mapped[bool] = mapped_column(default=False)
+    is_dead: Mapped[bool] = mapped_column(
+        default=False,
+    )
 
-    users = relationship("User", back_populates="enemy")
+    user: Mapped["User"] = relationship(
+        back_populates="enemy",
+        secondary="users_enemy",
+    )
+
+

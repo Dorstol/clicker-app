@@ -1,26 +1,21 @@
-from typing import Sequence
-
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.models import User
-from core.schemas.user import UserCreate
+from fastapi import HTTPException, status
+from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 
-async def get_all_users(
+async def get_user(
+    user_id: int,
     session: AsyncSession,
-) -> Sequence[User]:
-    stmt = select(User).order_by(User.id)
-    result = await session.scalars(stmt)
-    return result.all()
-
-
-async def create_user(
-    session: AsyncSession,
-    user_create: UserCreate,
 ) -> User:
-    user = User(**user_create.model_dump())
-    session.add(user)
-    await session.commit()
-    # await session.refresh(user)
-    return user
+    try:
+        stmt = select(User).where(User.id == user_id).options(joinedload(User.enemy))
+        result = await session.execute(stmt)
+        return result.scalar_one()
+    except NoResultFound:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="DOES_NOT_EXIST",
+        )
