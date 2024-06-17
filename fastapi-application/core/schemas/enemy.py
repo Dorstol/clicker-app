@@ -2,7 +2,11 @@ from pydantic import BaseModel, ConfigDict
 
 
 class EnemyBase(BaseModel):
-    pass
+    name: int
+    max_hp: int
+    current_hp: int
+    gold_reward: int
+    is_dead: bool
 
 
 class EnemyRead(EnemyBase):
@@ -10,9 +14,3 @@ class EnemyRead(EnemyBase):
         from_attributes=True,
     )
     id: int
-    name: int
-    max_hp: int
-    current_hp: int
-    gold_reward: int
-    is_dead: bool
-

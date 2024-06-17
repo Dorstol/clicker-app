@@ -24,9 +24,10 @@ class UserRead(UserBase):
     model_config = ConfigDict(
         from_attributes=True,
     )
+
     id: int
     attack_power: int
     gold: int
     max_energy: int
     current_energy: int
-    enemy: Optional[EnemyRead]
+    enemy: EnemyRead

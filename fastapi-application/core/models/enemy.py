@@ -18,5 +18,4 @@ class Enemy(IntIdPkMixin, Base):
     gold_reward: Mapped[int]
     is_dead: Mapped[bool] = mapped_column(default=False)
 
-    user_id = Column(Integer, ForeignKey('users.id'), unique=True)
-    user = relationship("User", back_populates="enemy")
+    users = relationship("User", back_populates="enemy")
