@@ -12,7 +12,7 @@ class UserRead(UserBase):
     model_config = ConfigDict(
         from_attributes=True,
     )
-
+    tg_id: int
     id: int
     attack_power: int
     gold: int

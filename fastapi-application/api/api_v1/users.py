@@ -42,3 +42,5 @@ async def update_user(
         session=session,
     )
     return user
+
+

@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, BigInteger
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
@@ -7,6 +7,9 @@ from .mixins.int_id_pk import IntIdPkMixin
 
 
 class User(IntIdPkMixin, Base):
+    tg_id: Mapped[int] = mapped_column(
+        BigInteger,
+    )
     username: Mapped[str] = mapped_column(
         unique=True,
     )
