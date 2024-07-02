@@ -37,13 +37,9 @@ def upgrade() -> None:
         "users",
         sa.Column("tg_id", sa.BigInteger(), nullable=False),
         sa.Column("username", sa.String(), nullable=False),
-        sa.Column(
-            "attack_power", sa.Integer(), server_default="1", nullable=False
-        ),
+        sa.Column("attack_power", sa.Integer(), server_default="1", nullable=False),
         sa.Column("gold", sa.Integer(), server_default="650", nullable=False),
-        sa.Column(
-            "max_energy", sa.Integer(), server_default="2000", nullable=False
-        ),
+        sa.Column("max_energy", sa.Integer(), server_default="2000", nullable=False),
         sa.Column(
             "current_energy",
             sa.Integer(),

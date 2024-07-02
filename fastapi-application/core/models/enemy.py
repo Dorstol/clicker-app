@@ -25,5 +25,3 @@ class Enemy(IntIdPkMixin, Base):
         back_populates="enemy",
         secondary="users_enemy",
     )
-
-

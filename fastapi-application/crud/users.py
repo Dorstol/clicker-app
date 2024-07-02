@@ -11,12 +11,12 @@ from core.schemas.user import UserUpdate
 from core.models import db_helper
 
 
-async def get_user(
-        user_id: int,
-        session: AsyncSession,
+async def get_user_by_telegram_id(
+    tg_id: int,
+    session: AsyncSession,
 ) -> Optional[User]:
     try:
-        stmt = select(User).where(User.id == user_id).options(joinedload(User.enemy))
+        stmt = select(User).where(User.tg_id == tg_id).options(joinedload(User.enemy))
         result = await session.execute(stmt)
         return result.scalar_one()
     except NoResultFound:
@@ -27,11 +27,11 @@ async def get_user(
 
 
 async def update_user(
-        user_id: int,
-        user_update: UserUpdate,
-        session: AsyncSession,
+    tg_id: int,
+    user_update: UserUpdate,
+    session: AsyncSession,
 ) -> Optional[User]:
-    user = await get_user(user_id, session)
+    user = await get_user_by_telegram_id(tg_id, session)
     try:
         for name, value in user_update.model_dump(exclude_unset=True).items():
             setattr(user, name, value)
